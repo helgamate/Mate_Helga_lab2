@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mate_Helga_lab2.Data;
 using Mate_Helga_lab2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mate_Helga_lab2.Controllers
 {
+    [Authorize(Policy = "OnlySales")]
     public class PublishersController : Controller
     {
         private readonly LibraryContext _context;

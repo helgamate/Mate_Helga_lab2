@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Identity.Models;
+//using Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 namespace Mate_Helga_lab2.Controllers

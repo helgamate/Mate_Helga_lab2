@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Mate_Helga_lab2.Data;
 using Mate_Helga_lab2.Models;
 using Mate_Helga_lab2;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mate_Helga_lab2.Controllers
 {
+    [Authorize(Roles = "Employee")]
     public class BooksController : Controller
     {
 
@@ -22,6 +24,7 @@ namespace Mate_Helga_lab2.Controllers
         }
 
         // GET: Books
+        [AllowAnonymous]
         public async Task<IActionResult> Index(
    string sortOrder,
    string currentFilter,
@@ -66,6 +69,7 @@ namespace Mate_Helga_lab2.Controllers
            1, pageSize));
         }
         // GET: Books/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Books == null)

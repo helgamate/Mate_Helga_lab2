@@ -7,10 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\LibraryContext.cs" />
     <Compile Remove="Migrations\20221115171254_ExtendedModel.cs" />
     <Compile Remove="Migrations\20221115171254_ExtendedModel.Designer.cs" />
     <Compile Remove="Migrations\20221115172410_newmodel.cs" />
     <Compile Remove="Migrations\20221115172410_newmodel.Designer.cs" />
+    <Compile Remove="Models\Author.cs" />
+    <Compile Remove="Models\Book.cs" />
+    <Compile Remove="Models\Customer.cs" />
+    <Compile Remove="Models\Order.cs" />
+    <Compile Remove="Models\PublishedBooks.cs" />
+    <Compile Remove="Models\Publishers.cs" />
   </ItemGroup>
 
   <ItemGroup>

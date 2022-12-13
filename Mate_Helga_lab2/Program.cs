@@ -3,11 +3,15 @@ using Mate_Helga_lab2.Hubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Mate_Helga_lab2.Areas.Identity.Data;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages();
+
 
 builder.Services.AddDbContext<LibraryContext>(options =>
 
@@ -19,11 +23,20 @@ builder.Services.AddAuthorization(opts => {
     });
 });
 
+
+builder.Services.Configure<IdentityOptions>(options => {
+
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.Lockout.AllowedForNewUsers = true;
+});
+
 builder.Services.AddDbContext<IdentityContext>(options =>
 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<IdentityContext>();
 
 builder.Services.AddSignalR();
@@ -34,8 +47,19 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     DbInitializer.Initialize(services);
-}
 
+}
+builder.Services.AddAuthorization(opts => {
+    opts.AddPolicy("SalesManager", policy => {
+        policy.RequireRole("Manager");
+        policy.RequireClaim("Department", "Sales");
+    });
+});
+builder.Services.ConfigureApplicationCookie(opts =>
+{
+    opts.AccessDeniedPath = "/Identity/Account/AccessDenied";
+
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
